@@ -44,7 +44,7 @@ public class EncodingMain2 {
         test("A", EUC_KR, UTF_8);
         test("A", MS_949, UTF_8);
         test("A", UTF_8, MS_949);
-        test("A", UTF_8, UTF_16BE); // X(UTF-16은 ASCII 지원 X)
+        test("A", UTF_8, UTF_16BE); // X(UTF-16은 ASCII 지원 안하기 때문)
     }
 
     private static void test(String text, Charset encodingCharset, Charset decodingCharset) {
