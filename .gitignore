@@ -26,4 +26,7 @@ bin/
 .vscode/
 
 ### Mac OS ###
-.DS_Store
+.DS_Storetemp/copy.dat
+temp/copy_new.dat
+temp/copy_new.dat
+temp/copy_new.dat
