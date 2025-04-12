@@ -17,10 +17,10 @@ public class SocketCloseUtil {
         closeSocket(socket);
     }
 
-    public static void closeSocket(Socket socket) {
-        if (socket != null) {
+    public static void closeInput(InputStream input) {
+        if (input != null) {
             try {
-                socket.close();
+                input.close();
             } catch (IOException e) {
                 log(e.getMessage());
             }
@@ -37,10 +37,10 @@ public class SocketCloseUtil {
         }
     }
 
-    public static void closeInput(InputStream input) {
-        if (input != null) {
+    public static void closeSocket(Socket socket) {
+        if (socket != null) {
             try {
-                input.close();
+                socket.close();
             } catch (IOException e) {
                 log(e.getMessage());
             }
