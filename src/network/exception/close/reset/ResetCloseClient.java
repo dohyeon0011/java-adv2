@@ -28,7 +28,7 @@ public class ResetCloseClient {
         Thread.sleep(1000); // RST 메시지 전송 대기
 
         try {
-            // java.net.SocketException: Connection reset(RST 패킷 받은 거임), RST 패킷 받은 이후에 rear() 호출
+            // java.net.SocketException: Connection reset(RST 패킷 받은 거임), RST 패킷 받은 이후에 read() 호출
             int read = input.read();
             System.out.println("read = " + read);
         } catch (SocketException e) {
