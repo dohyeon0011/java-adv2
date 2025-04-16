@@ -14,7 +14,7 @@ public class SuppressWarningCase {
     }
 
     @SuppressWarnings("deprecation")
-    public void deprecatedMethod() {    // 더이상 사용되지 않는 메서드 호출
+    public void deprecatedMethod() {    // 더이상 사용되지 않는 메서드 호출 시
         Date date = new Date();
         int date1 = date.getDate();
     }
