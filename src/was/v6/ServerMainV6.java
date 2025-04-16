@@ -3,7 +3,7 @@ package was.v6;
 import was.httpserver.HttpServer;
 import was.httpserver.ServletManager;
 import was.httpserver.servlet.DiscardServlet;
-import was.httpserver.servlet.ReflectionServlet;
+import was.httpserver.servlet.reflextion.ReflectionServlet;
 import was.v5.servlet.HomeServlet;
 
 import java.io.IOException;
