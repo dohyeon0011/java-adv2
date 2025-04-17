@@ -1,11 +1,15 @@
 package was.httpserver;
 
+import util.MyLogger;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+
+import static util.MyLogger.*;
 
 public class HttpRequest {
 
@@ -17,11 +21,12 @@ public class HttpRequest {
     public HttpRequest(BufferedReader reader) throws IOException {
         parseRequestLine(reader);
         parseHeaders(reader);
-        // 메시지 바디는 이후에 처리
+        parseBody(reader);
     }
 
     // GET /search?q=hello HTTP/1.1
     // Host: localhost:12345
+
     private void parseRequestLine(BufferedReader reader) throws IOException {
         String requestLine = reader.readLine();
         if (requestLine == null) {  // 클라이언트가 연결만 하고 데이터 전송 없이 연결을 끊는 경우
@@ -38,14 +43,13 @@ public class HttpRequest {
         // /search?q=hello
         String[] pathParts = parts[1].split("\\?");
         path = pathParts[0];
-        
+
         // q=hello
         // key1=value&key2=value2
         if (pathParts.length > 1) {
             parseQueryParameters(pathParts[1]);
         }
     }
-
     private void parseQueryParameters(String queryString) {
         for (String param : queryString.split("&")) {
             String[] keyValue = param.split("=");
@@ -63,6 +67,28 @@ public class HttpRequest {
         while (!(line = reader.readLine()).isEmpty()) {
             String[] headerParts = line.split(":");
             headers.put(headerParts[0].trim(), headerParts[1].trim());
+        }
+    }
+
+    // Http 메시지 바디 부분
+    private void parseBody(BufferedReader reader) throws IOException {
+        if (!headers.containsKey("Content-Length")) {
+            return;
+        }
+
+        int contentLength = Integer.parseInt(headers.get("Content-Length"));
+        char[] bodyChars = new char[contentLength];
+        int read = reader.read(bodyChars);
+        if (read != contentLength) {
+            throw new IOException("Fail to raed entire body. Expected " + contentLength + " bytes, but read " + read);
+        }
+        String body = new String(bodyChars);
+        log("HTTP Message Body: " + body);
+
+        String contentType = headers.get("Content-Type");
+        if ("application/x-www-form-urlencoded".equals(contentType)) {
+            // id=11&name=11&age=11
+            parseQueryParameters(body);
         }
     }
 
